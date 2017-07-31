@@ -1,6 +1,5 @@
 import unittest
 import gybc.gybc as gybc
-import gybc.statuses as statuses
 
 
 class TestGYBCParser(unittest.TestCase):

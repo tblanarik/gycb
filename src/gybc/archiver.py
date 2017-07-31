@@ -16,7 +16,7 @@ api = twitter.Api(consumer_key=config['twitterkeys']['consumer_keys'],
 statuses = api.GetUserTimeline(195082066, count=200)
 
 
-f = open(os.path.join(gybc.GYBC_PATH, 'bin' 'archive.txt'), 'w')
+f = open(os.path.join(gybc.GYBC_PATH, '..', '..', 'bin' 'archive.txt'), 'w')
 last_id = statuses[-1].id
 count=len(statuses)
 
