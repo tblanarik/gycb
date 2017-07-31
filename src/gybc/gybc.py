@@ -1,19 +1,43 @@
-#import twitter
 import webcolors
-import gybc.statuses as statuses
-import gybc.carmfg as carmfg
+from nltk.tokenize import wordpunct_tokenize
+import datetime
+import statuses
+import carmfg
+
 
 def word_is_color(word):
     return word in webcolors.CSS3_NAMES_TO_HEX
 
-for status in statuses.texts():
-    found_colors = []
-    found_makes = []
-    for word in status.lower().split(" "):
+def word_is_year(word):
+    try:
+        word_int = int(word)
+        return 1900 <= word_int <= datetime.datetime.now().year + 1
+    except:
+        return False
+
+def parse_tweet(sentence):
+    sentence = sentence.lower()
+    results = {'color': [],
+               'make': [],
+               'model': [],
+               'year' : [],
+               'license': []
+               }
+    for word in wordpunct_tokenize(sentence):
         if word_is_color(word):
-            found_colors.append(word)
+            results['color'].append(word)
         if word in carmfg.makers:
-            found_makes.append(word)
-    if not found_colors or not found_makes:
-        print(status)
-    print("Possible make and color: %s / %s" % (str(found_makes), str(found_colors)))
+            results['make'].append(word)
+        if word_is_year(word):
+            results['year'].append(word)
+
+    return results
+
+def main():
+    for sentence in statuses.texts():
+        print(sentence)
+        print(parse_tweet(sentence))
+        print("\n")
+
+if __name__ == "__main__":
+    main()
